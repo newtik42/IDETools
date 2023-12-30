@@ -69,7 +69,7 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
     }
 
     public function getIncludePath(): array {
-        
+        return $this->adaptor->getIncludePath();
     }
 
     public function getProperties(): array {

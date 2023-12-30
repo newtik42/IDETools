@@ -94,7 +94,7 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
 
     public function getIncludePath(): array {
         
-        
+        return $this->_getPropertie('private_private.properties', 'include.path.private');
         
     }
 
@@ -157,6 +157,11 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
         return $params;
     }
     
+    private function _getPropertie($file, $key) {
+        return $this->properties[$file][$key] ?? null;
+    }
+    
+    
     private function _setPropertie($file, $key, $value, $reset = false) {
 
         if (!isset($this->properties[$file])) {
@@ -172,7 +177,7 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
         else {
             if ($this->properties[$file][$key]['type'] != TypeValue::Value) {
                 $this->properties[$file][$key]['value'][] = $value;
-                array_unique($this->properties[$file][$key]['value']);
+                $this->properties[$file][$key]['value'] = array_unique($this->properties[$file][$key]['value']);
             } else {
                 $this->properties[$file][$key]['value'] = $value;
             }

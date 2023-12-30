@@ -1,21 +1,20 @@
 <?php
 include_once './../autoloader.php';
 
-$ideT = new NewTik\IDETools\IDETools(\NewTik\IDETools\enumIDE::NetBeans,  __dir__.'/data/');
+$file = '/media/newtik/Elements/stas/works/projects/OpenCart/my_modules/data_exchange/newtik_1c_sync/';
+
+$ideT = new NewTik\IDETools\IDETools(\NewTik\IDETools\enumIDE::NetBeans, $file);
 
 
-
-
+$ideT->getProjectSetting();
 
 $ideT->addIncludePath('/media/newtik/Elements/stas/works/lib/php/OpenCart/OpenCartAutocomplete/');
 $ideT->addIncludePath('/media/newtik/Elements/stas/works/lib/php/OpenCart/build_modules/');
 
-$ideT->addConfiguration('build-1', 
-        [
-            'index.file' => 'build.php',
-            'run.as' => 'SCRIPT',
-            'script.arguments' => 'runtype=build'
-        ]
-);
 
-$ideT->save();
+echo '<pre>';
+var_dump($ideT->getIncludePath());
+echo '</pre>';
+
+
+//$ideT->save();
