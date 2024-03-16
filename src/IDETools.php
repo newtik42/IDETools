@@ -14,18 +14,48 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
     
     private \NewTik\IDETools\interfaceIDE $adaptor;
     
-    public function __construct($adaptor, string $dir_sourse = '') {
+    public function __construct($adaptor = null, string $dir_sourse = '') {
         
         if($dir_sourse == '')
             $dir_sourse = dirname($_SERVER['SCRIPT_NAME']). '/';
         
-        $class = 'NewTik\\IDETools\\ide\\' . $adaptor;
+        if($adaptor == null){
+            
+            $classNameSpace = 'NewTik\\IDETools\\ide\\';
+            $ides = glob(__DIR__ . '/ide/*.php');
+            
+            foreach ($ides as $ide) {
+                
+                $ide = basename($ide, '.php');
+                
+                if (class_exists($classNameSpace.$ide)) {
+                    
+                    $class = $classNameSpace . $ide;
+                    
+                    if(($class)::chekIDE($dir_sourse)){
+                        
+                        $this->adaptor = new $class($dir_sourse);                        
+                        
+                        break;
+                    }
+                }
+            }            
+            
+        }else{
+            
+            $class = 'NewTik\\IDETools\\ide\\' . $adaptor;
 
-		if (class_exists($class)) {
-			$this->adaptor = new $class($dir_sourse);
-		} else {
-			throw new \Exception('Error: Could not load adaptor ' . $adaptor . '!');
-		}
+            if (class_exists($class)) {
+                $this->adaptor = new $class($dir_sourse);
+                $this->adaptor::chekIDE();
+            } else {
+                throw new \Exception('Error: Could not load adaptor ' . $adaptor . '!');
+            }
+        }
+        
+        echo '<pre>';
+        var_dump($this->adaptor);
+        echo '</pre>';
         
         $this->dir_sourse = $dir_sourse;
         
@@ -90,4 +120,7 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
         
     }
 
+    public static function chekIDE(string $dir_sourse = ''): bool {
+        return $this->adaptor->chekIDE($dir_sourse);
+    }
 }

@@ -14,6 +14,8 @@ interface interfaceIDE {
     
     public function getProjectSetting() : array;
     
+    static function chekIDE(string $dir_sourse = '') : bool;
+    
     
     public function getProperties() : array;
     public function setProperties($properties);

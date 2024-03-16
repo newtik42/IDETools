@@ -112,4 +112,12 @@ class phpStorm implements \NewTik\IDETools\interfaceIDE {
         
     }
 
+    static function chekIDE(string $dir_sourse = ''): bool {
+        
+        if(empty($dir_sourse)){
+            $dir_sourse = $this->dir_sourese;
+        }
+        
+        return is_dir($dir_sourse . self::DIR);
+    }
 }
