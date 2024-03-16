@@ -52,11 +52,7 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
                 throw new \Exception('Error: Could not load adaptor ' . $adaptor . '!');
             }
         }
-        
-        echo '<pre>';
-        var_dump($this->adaptor);
-        echo '</pre>';
-        
+                
         $this->dir_sourse = $dir_sourse;
         
     }
