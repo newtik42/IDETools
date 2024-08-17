@@ -1,5 +1,5 @@
 <?php
-include_once './../autoloader.php';
+include_once './../vendor/autoload.php';
 
 $file = '/media/newtik/Elements/stas/works/projects/OpenCart/my_modules/data_exchange/newtik_1c_sync/';
 
@@ -13,7 +13,7 @@ $ideT->addIncludePath('/media/newtik/Elements/stas/works/lib/php/OpenCart/build_
 
 
 echo '<pre>';
-var_dump($ideT->getIncludePath());
+var_dump($ideT->getData());
 echo '</pre>';
 
 

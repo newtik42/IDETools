@@ -1,0 +1,20 @@
+{
+    "name": "newtik/idetools",
+    "description": "IDETools, NetBeans, phpStorm",
+    "keywords"    : [],
+    "license"     : "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "NewTik",
+            "email": "dev@newtik-opencart.com"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.4"
+    },
+    "autoload" : {
+        "psr-4" : { "NewTik\\IDETools\\": "src/" }
+    }
+    
+}

@@ -14,32 +14,40 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
     
     private \NewTik\IDETools\interfaceIDE $adaptor;
     
+    private bool $ckeckIDE = false;
+    
     public function __construct($adaptor = null, string $dir_sourse = '') {
         
         if($dir_sourse == '')
             $dir_sourse = dirname($_SERVER['SCRIPT_NAME']). '/';
         
+        $this->ckeckIDE = self::chekIDE($dir_sourse);
+        
+        if(!$this->ckeckIDE){
+            return;
+        }
+        
         if($adaptor == null){
             
             $classNameSpace = 'NewTik\\IDETools\\ide\\';
             $ides = glob(__DIR__ . '/ide/*.php');
-            
+
             foreach ($ides as $ide) {
-                
+
                 $ide = basename($ide, '.php');
-                
+
                 if (class_exists($classNameSpace.$ide)) {
-                    
+
                     $class = $classNameSpace . $ide;
-                    
+
                     if(($class)::chekIDE($dir_sourse)){
-                        
+
                         $this->adaptor = new $class($dir_sourse);                        
-                        
+
                         break;
                     }
                 }
-            }            
+            } 
             
         }else{
             
@@ -63,10 +71,16 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
     }
 
     public function addIncludePath($path) {
+        if(!$this->ckeckIDE){
+            return '';
+        }
         $this->adaptor->addIncludePath($path);
     }
 
     public function clear() {
+        if(!$this->ckeckIDE){
+            return;
+        }
         $this->adaptor->clear();
     }
 
@@ -91,6 +105,9 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
     }
 
     public function getData(): array {
+        if(!$this->ckeckIDE){
+            return [];
+        }
         return $this->adaptor->getData();
     }
 
@@ -115,8 +132,30 @@ class IDETools implements \NewTik\IDETools\interfaceIDE{
         $this->adaptor->save();
         
     }
-
+    
     public static function chekIDE(string $dir_sourse = ''): bool {
-        return $this->adaptor->chekIDE($dir_sourse);
+        
+        $classNameSpace = 'NewTik\\IDETools\\ide\\';
+        $ides = glob(__DIR__ . '/ide/*.php');
+
+        foreach ($ides as $ide) {
+
+            $ide = basename($ide, '.php');
+
+            if (class_exists($classNameSpace.$ide)) {
+
+                $class = $classNameSpace . $ide;
+
+                if(($class)::chekIDE($dir_sourse)){
+
+                    return true;                        
+
+                    break;
+                }
+            }
+        }    
+        
+        return false;
+        
     }
 }

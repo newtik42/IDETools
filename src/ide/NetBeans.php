@@ -13,9 +13,9 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
     
     public function __construct(string $dir_sourse) {
         
-        $this->dir_sourese = $dir_sourse . self::DIR;
-        $this->dir_sourese = str_replace("//", "/", $this->dir_sourese);
-        
+        $this->dir_sourese = realpath($dir_sourse . self::DIR) . "/";
+        $this->data['dir_name'] = basename($dir_sourse);
+        $this->data['dir'] = realpath($dir_sourse) . "/";
     }
 
     
@@ -253,12 +253,7 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
         }
     }
 
-    static function chekIDE(string $dir_sourse = ''): bool {
-        
-        if(empty($dir_sourse)){
-            $dir_sourse = $this->dir_sourese;
-        }
-        
+    static function chekIDE(string $dir_sourse = ''): bool {        
         return is_dir($dir_sourse . self::DIR);
     }
 }
