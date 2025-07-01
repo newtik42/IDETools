@@ -13,7 +13,7 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
     
     public function __construct(string $dir_sourse) {
         
-        $this->dir_sourese = realpath($dir_sourse . self::DIR) . "/";
+        $this->dir_sourese = realpath($dir_sourse . "/" . self::DIR) . "/";
         $this->data['dir_name'] = basename($dir_sourse);
         $this->data['dir'] = realpath($dir_sourse) . "/";
     }
@@ -212,7 +212,6 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
 
     public function getProjectSetting(): array {
         
-        
         if (!file_exists($this->dir_sourese . 'project.xml'))
             return [];
         
@@ -248,13 +247,13 @@ class NetBeans implements \NewTik\IDETools\interfaceIDE{
     public function save() {
         
         foreach ($this->properties as $key => $propertie) {
-            $file = str_replace("_", '/', $key);
+            $file = str_replace("_", '/', $key);            
             $this->_savePropertieFile($file, $this->properties[$key]);
         }
     }
 
     static function chekIDE(string $dir_sourse = ''): bool {        
-        return is_dir($dir_sourse . self::DIR);
+        return is_dir(realpath($dir_sourse . self::DIR));
     }
 }
 

@@ -8,7 +8,7 @@
 
 namespace NewTik\IDETools;
 
-interface interfaceIDE {
+interface InterfaceIDE {
         
     public function getData() : array;
     

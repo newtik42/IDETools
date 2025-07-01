@@ -1,12 +1,15 @@
 <?php
 include_once './../vendor/autoload.php';
 
-$file = '/media/newtik/Elements/stas/works/projects/OpenCart/my_modules/data_exchange/newtik_1c_sync/';
 
-$ideT = new NewTik\IDETools\IDETools(\NewTik\IDETools\enumIDE::NetBeans, $file);
+$ideT = new \NewTik\IDETools\IDETools(\NewTik\IDETools\enumIDE::NetBeans, __DIR__ . "/data");
 
 
-$ideT->getProjectSetting();
+$setting = $ideT->getProjectSetting();
+
+print_r($setting);
+
+echo  PHP_EOL;
 
 $ideT->addIncludePath('/media/newtik/Elements/stas/works/lib/php/OpenCart/OpenCartAutocomplete/');
 $ideT->addIncludePath('/media/newtik/Elements/stas/works/lib/php/OpenCart/build_modules/');
